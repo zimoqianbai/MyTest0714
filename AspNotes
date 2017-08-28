@@ -2,7 +2,7 @@ ASP.NET学习笔记
 ============================================================
 1.多行注释：         			<%--annotation--%>
 
-2.内嵌语法块：						 <%内嵌代码%>
+2.内嵌语法块：				<%内嵌代码%>
 
 3.在标记元素中使用内嵌代码：		<%=balabala内嵌表达式%><%= %>是输出，<%# %>是赋值
 
@@ -40,9 +40,9 @@ ASP.NET学习笔记
             						Response.Write($"使用Request.Params[string key]====={Request.Params["value"]}<br>");
             						Response.Write($"使用Requset.QueryString[string key]======{Request.QueryString["value"]}<br>");
 
-12.获取客户端浏览器信息：		HttpBrowserCapabilities b=Request.Browser;b.Type b.Version b.Cookies
+12.获取客户端浏览器信息：			HttpBrowserCapabilities b=Request.Browser;b.Type b.Version b.Cookies
 
-13.Application对象的存储和读取：	Application.Lock();
+13.Application对象的存储和读取：		Application.Lock();
 					Application["varName"]=value;
 					Application.Unlock();保证数据的一致性
 
