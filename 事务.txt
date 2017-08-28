@@ -1,0 +1,21 @@
+ using (SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["conStr"].ToString()))
+        {
+            conn.Open();
+            using (SqlCommand cmd = conn.CreateCommand())
+            {
+                SqlTransaction trans = conn.BeginTransaction(); //开始事务
+                cmd.Connection = conn;
+                cmd.Transaction = trans;    //cmd要绑定事务
+                cmd.CommandText = "insert into tb_Class(ClassName) values('" + txtClassName.Text.Trim() + "')";
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                    trans.Commit(); //事务完成之后提交事务
+                    bind();
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback(); //如果事务没有完成，就回滚事务
+                }
+            }
+        }

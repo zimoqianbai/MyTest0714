@@ -1,0 +1,24 @@
+关于if (e.Row.RowType == DataControlRowType.DataRow)的作用
+GridView1_RowDataBound()//当gv绑定了数据之后触发
+e.Row.RowType  是指当前行的类型
+DataControlRowType 是数据控件GridView，的行的 类型集合 ， DataRow是数据绑定行
+这个判断语句的意思就是判断当前行是不是数据绑定行。（是否已经绑定了数据）
+
+
+
+指定数据控件（例如 DetailsView 或 GridView）中行的状态，附上Msdn链接https://technet.microsoft.com/zh-cn/system.web.ui.webcontrols.datacontrolrowstate(VS.80).aspx
+
+e.Row.RowState == (DataControlRowState.Alternate | DataControlRowState.Normal）
+
+
+成员名称	说明
+Alternate	
+指示数据控件行是交替行。
+Edit	
+指示行处于编辑状态，通常单击的结果行的编辑按钮。 通常情况下， Edit 和 Insert 是互相排斥的状态。
+Insert	
+指示该行是一个新行，通常单击插入按钮以添加新行的结果。 通常情况下， Insert 和 Edit 是互相排斥的状态。
+Normal	
+指示数据控件行处于正常状态。 Normal 状态是与除以外其他州互相排斥 Alternate 状态。
+Selected	
+指示用户已选择行。
