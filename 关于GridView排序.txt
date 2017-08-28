@@ -1,0 +1,55 @@
+关于GridView排序：
+1.AllowSorting="True"
+2.对于列的设置： <asp:BoundField DataField="stuID" HeaderText="编号" SortExpression="stuID" />DataField是与数据源中的字段绑定。
+SortExpression相当于Order by后面的语句，[默认ASC]（所以可以省略）
+3.每次打开页面，即Page_Load都要重新设置成我规定的以“stuID”升序排序。
+protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            ViewState["SortOrder"] = "stuID";//赋值视图状态，以保证每次打开页面，都是我想要的Order by “stuID ASC”
+            ViewState["OrderDire"] = "ASC";
+            GridViewBind();
+        }
+    }
+
+  public void GridViewBind()
+    {
+        
+        SqlConnection sqlCon = new SqlConnection();
+        //实例化SqlConnection对象连接数据库的字符串
+        sqlCon.ConnectionString = "Data Source=.;Initial Catalog=db_Student;Integrated Security=True";
+        //定义SQL语句
+        string SqlStr = "select * from tb_StuInfo";
+        //实例化SqlDataAdapter对象
+        SqlDataAdapter da = new SqlDataAdapter(SqlStr, sqlCon);
+        //实例化数据集DataSet
+        DataSet ds = new DataSet();
+        da.Fill(ds, "tb_StuInfo");
+        DataView dv = ds.Tables[0].DefaultView;
+        string sort = (string)ViewState["SortOrder"] + " " + (string)ViewState["OrderDire"];
+        dv.Sort = sort;//根据视图状态保存值的不同，每次GridViewBind()将产生不同的效果。        
+        GridView1.DataSource = dv;
+        GridView1.DataBind();
+    }
+4.每次点击Column的HeaderText（相当于一个LinkButton），都会触发排序GridView1_Sorting（），点一次成降序，再点一次成升序.
+ GridView的各个部分的 SortExpression 都是为了Command服务,点了哪个col的header  哪个col的SortExpression 就生效,GridView.SortExpression 就是哪个
+在多次排序过程中需要用视图状态来保存SortExpression，否则每次排序SortExpression都是默认的，无法达到多次排序的效果。
+
+protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)
+    {
+        string tempSortExp = e.SortExpression;
+        if (ViewState["SortOrder"].ToString() == tempSortExp)如果之前保存的SortExpression和现在e的SortExpression是一样的话
+        {
+            if (ViewState["OrderDire"].ToString() == "Desc")//就把它改成相反的排序
+                ViewState["OrderDire"] = "ASC";
+            else
+                ViewState["OrderDire"] = "Desc";
+        }
+        else
+        {
+            ViewState["SortOrder"] = e.SortExpression;
+        }
+        GridViewBind();//最后根据现在的、符合我要求的SortExpression来进行dataBind以及排序
+
+    }
