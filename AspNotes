@@ -94,4 +94,5 @@ ASP.NET学习笔记
        				 		}
     					}
 
-25.
+25.收藏本页按钮和设为主页按钮：	    <a href="#" onclick ="this.style.behavior='url(#default#homepage)';this.sethomepage('http://网址')" >设置主页</a>
+					<a href="#" onclick="window.external.addFavorite('http://网址','网址说明')" >收藏本站</a>
