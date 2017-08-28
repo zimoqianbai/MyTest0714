@@ -1,0 +1,28 @@
+一、操作字节和字节数组，且可以操作文件指针-------FileStream
+
+FileStream fs=new FileStream(@"文件路径"，FileMode.xx)
+//应用程序的当前文件路径为。。。\bin\debug，所以例如读取控制台应用程序的Program.cs,文件路径为：@“..\..\Program.cs”
+
+fs.Seek(数字，SeekOrigin.XX)//移动文件读取位置的指针
+
+byte数组转化为String等:1.string temp = Encoding.UTF8.GetString(byteArray);
+		       2.Decoder de = Encoding.UTF8.GetDecoder();
+			de.GetChars();
+
+string、char转byte:1.byte [] byteArray=new UTF8Encoding().GetBytes()
+		   2.Encoder en = Encoding.UTF8.GetEncoder();
+                   en.GetBytes()
+
+
+二、操作字符和字符串，不能移动文件指针-----------StreamWriter、StreamReader
+
+StreamReader sr=new StreamReader("文件路径")；
+string trmp=sr.ReadLine();//sr.Read(),读取当个字符作为int返回，当到达文件尾时，就返回-1
+//ReadLine()方法读取换行符之前的文本，当到达文件尾时，就返回null
+
+
+
+三、处理小型文件可以使用string temp=sr.ReadToEnd();如果数据过大内存将被极大的占用。
+
+处理大型文件可以使用foreach(string temp in File.ReadLines("文件路径")){WriteLine(temp) }
+File.ReadLines返回一个IEnumerable<string>集合
