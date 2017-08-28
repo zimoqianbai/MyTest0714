@@ -1,0 +1,97 @@
+ASP.NET学习笔记
+============================================================
+1.多行注释：         			<%--annotation--%>
+
+2.内嵌语法块：						 <%内嵌代码%>
+
+3.在标记元素中使用内嵌代码：		<%=balabala内嵌表达式%><%= %>是输出，<%# %>是赋值
+
+4.readonly，const：			若要创建运行时初始化的常数值，应使用readonly关键字。const关键字用于创建编译时常数。
+
+5.Response.Redirect("")
+					~/表示从根目录开始查找admin目录下的Login==========Response.Redirect("~/admin/Login")//~用shift+`
+					./表示从当前目录开始。
+					../表示当前目录的上级目录中。
+					Response.Redirect("TargetWebSite?parameter1=1&parameter2=2");
+					网址与参数用？隔开，参数之间用&隔开
+					Request.Params["参数名"]//获取参数
+
+6.Response对象与JavaScript结合使用：	Response.Write("<script>window.close()</script>");
+
+7.存储cookie变量：       		Response.Cookies[valName].Value=值；
+取回cookie:              		变量名=Request.Cookies[valName].Value；
+
+8.获取用户IP：      			string 变量名=Request.UserHostAddress;
+					string 变量名=Request.ServerVariables["REMOTE_ADDR"];
+
+9.写入文件到客户端：			Response.WriteFile(@"全文件名")//如果文件不存在会产生异常
+
+10.获取所指定的虚拟路径对应的物理路径	Server.MapPath("")  当前的网站目录为E:\wwwroot   
+					应用程序虚拟目录为E:\wwwroot\company 
+					浏览的页面路径为E:\wwwroot\company\news\show.asp
+					在show.asp页面中使用
+					Server.MapPath("./")   返回路径为：E:\wwwroot\company\news
+					Server.MapPath("/")    返回路径为：E:\wwwroot
+					Server.MapPath("../")   返回路径为：E:\wwwroot\company
+					Server.MapPath("~/")   返回路径为：E:\wwwroot\company
+
+11.获取页面间的传值：			Response.Redirect("xxx.aspx?value=页面间的传值");
+参数的默认类型是字符串					xxx.aspx的代码中：Response.Write($"使用Request[string key]===={Request["value"]}<br>");
+            						Response.Write($"使用Request.Params[string key]====={Request.Params["value"]}<br>");
+            						Response.Write($"使用Requset.QueryString[string key]======{Request.QueryString["value"]}<br>");
+
+12.获取客户端浏览器信息：		HttpBrowserCapabilities b=Request.Browser;b.Type b.Version b.Cookies
+
+13.Application对象的存储和读取：	Application.Lock();
+					Application["varName"]=value;
+					Application.Unlock();保证数据的一致性
+
+14.Session:				一个用户访问网站就会新建一个Session对象，针对单一网站使用者。当网站使用者关掉浏览器或者超过Session对象的有效时间，Session对象就会关闭。
+					(它是object类型)Session["varName"]=value;
+
+15.Cookie对象：				Response.Cookies["varName"].Value=value
+					变量=Request.Cookies["varName"].Value
+
+16.IPv6表示法：				128位地址，8组每组4位十六进制数。每组的前导0可以省略，但每个分组必须至少保留一位数字。
+					若包含很长的零序列，可以将冒号十六进制格式中相邻的连续零位合并，用双冒号“::”表示，且双冒号只能在地址中出现一次。
+
+17.md5加密：				using System.Web.Security;string tempStr=FormsAuthentication.HashPasswordForStoringInConfigFile(data, "md5");
+
+18.获取文件的后缀：			String fileExtension = System.IO.Path.GetExtension(this.FileUpload1.FileName).ToLower();
+
+19.DataBind:			 	在.aspx中定义公共的属性（有get访问器）或者变量，并Page.DataBind()；在源代码中<%#变量名%>以获取变量值.
+					Text="<%#函数调用（参数） %>"      Text="<%#operation(ddlOperator.SelectedValue) %>"     Text='<%#"总金额为："+Convert.ToString(TextBox2.Text) %>'
+					Height ='<%# 400*Convert .ToDouble(TextBox1.Text)/100 %>'
+					如GridView、DropDownList1.DataSource = arraylist;//实现数据绑定后必须调用DataBind方法
+        				DropDownList1.DataBind();
+
+20.控制弹出窗口的大小： 		Response.Write("<script language='javascript'>window.open('WebForm1.aspx','新窗口的名字，可以为空'，'width=332,height=200')</script>");
+
+21.全局ConnectionString:		设置web.config中的节点    <appSettings > <add key="ConnectionString" value="dsfsdf"/> </appSettings>
+					调用：string conStr = ConfigurationManager.AppSettings["ConnectionString"].ToString();
+
+22.为GridView设置主键并获取主键值：	GridView1.DataKeyNames = new string []{ "主键字段名" }；获取主键值： string temp=GridView1.DataKeys[e.RowIndex].Value.ToString();
+
+23.单击GridView控件的某行按钮后，
+刷新页面（或PostBack）后维持当前位置，
+不会回到页面顶端：			<%@ Page Language="C#" MaintainScrollPositionOnPostback="true" %>
+
+
+24.在GridView中删除数据：		需要添加一个CommandField列，并指明为“删除”按钮（默认为LinkButton）
+        				单击该按钮时触发RowDeleting事件
+   					 protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    					{
+        				string sqlStr = "delete from xxxx where GUID='" + GridView1.DataKeys[e.RowIndex].Value.ToString() + "'";
+        				cmd.ExecuteNonQuery();
+       					 bind();
+    					}
+    					单击“删除”按钮时可以设置弹出一个确认提示框：
+   				 	protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+    					{
+       					if (e.Row.RowType == DataControlRowType.DataRow)
+        					{
+           				 		((LinkButton)(e.Row.Cells[4].Controls[0])).Attributes.Add("onclick", "return confirm('确定要删除吗？')");
+       				 		}
+    					}
+
+25.
