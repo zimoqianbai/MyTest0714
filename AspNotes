@@ -65,7 +65,7 @@ ASP.NET学习笔记
 					如GridView、DropDownList1.DataSource = arraylist;//实现数据绑定后必须调用DataBind方法
         				DropDownList1.DataBind();
 
-20.控制弹出窗口的大小： 		Response.Write("<script language='javascript'>window.open('WebForm1.aspx','新窗口的名字，可以为空'，'width=332,height=200')</script>");
+20.控制弹出窗口的大小： 		 	Response.Write("<script language='javascript'>window.open('WebForm1.aspx','新窗口的名字，可以为空'，'width=332,height=200')</script>");
 
 21.全局ConnectionString:		设置web.config中的节点    <appSettings > <add key="ConnectionString" value="dsfsdf"/> </appSettings>
 					调用：string conStr = ConfigurationManager.AppSettings["ConnectionString"].ToString();
