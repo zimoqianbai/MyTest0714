@@ -96,3 +96,7 @@ ASP.NET学习笔记
 
 25.收藏本页按钮和设为主页按钮：	    <a href="#" onclick ="this.style.behavior='url(#default#homepage)';this.sethomepage('http://网址')" >设置主页</a>
 					<a href="#" onclick="window.external.addFavorite('http://网址','网址说明')" >收藏本站</a>
+
+26.Ajax 弹出对话框：			   当Updatepanel控件更新，弹出对话框。ScriptManager.RegisterStartupScript(UpdatePanel1, typeof(UpdatePanel), "", "alert('success')", true);
+					 实质是为Updatepanel中的某个控件注册一个启动脚本块
+					 
