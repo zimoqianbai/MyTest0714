@@ -1,0 +1,42 @@
+1.在一个异步请求提交之后，各事件的激发顺序：
+                                        add_initializeRequest
+                                        add_beginRequest
+                                        add_pageLoading
+                                        add_pageLoaded
+                                        add_endRequest
+                                        add_pageLoaded
+2.获取PageRequestManager的实例：var prm = Sys.WebForms.PageRequestManager.getInstance();
+prm.get_isInAsyncPostBack()：判断一个异步回送是否正在进行中
+prm.abortPostBack()：把一个正在执行中的异步回送取消。
+
+
+
+
+3.initializeRequest：
+触发时机：当一个异步请求的回送被初始化之前引发。
+添加事件处理代码：Sys.WebForms.PageRequestManager.getInstance().add_initializeRequest(initFunc);
+移除事件处理代码：Sys.WebForms.PageRequestManager.getInstance().remove_initializeRequest(initFunc);
+           initFunc是该页面初始化之前要执行的客户端方法。该方法的声明为：
+           function initFunc(sender,args)
+           {
+                //args的数据类型是：                    InitializeRequestEventArgs
+                //args.get_postBackElement()：         取得初始化异步回送的元素对象。
+                   //args.get_postBackElement().id     取得初始化异步回送的元素对象的id号
+                   //args.get_postBackElement().value  取得初始化异步回送的元素对象的value值 
+                //args.set_cancel(bool)：              取消初始化异步回送，即丢弃该异步回送。
+           }
+<script type="text/javascript" language="javascript">
+            var prm = Sys.WebForms.PageRequestManager.getInstance();//定义一个全局PageRequestManager实例赋值给变量 prm 
+        prm.add_initializeRequest(initializeRequest);//增加一个事件，在异步请求初始化之前
+        prm.add_endRequest(endRequest);
+        var postbackElement;
+        function initializeRequest(sender, args) {
+            document.body.style.cursor = "wait";
+            if (prm.get_isInAsyncPostBack()) {//判断一个异步回送是否正在进行中
+                args.set_cancel(true);
+            }
+        }
+        function endRequest(sender, args) {
+            document.body.style.cursor = "default";
+        }
+    </script>
