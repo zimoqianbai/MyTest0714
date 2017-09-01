@@ -100,3 +100,4 @@ ASP.NET学习笔记
 26.Ajax 弹出对话框：			   当Updatepanel控件更新，弹出对话框。ScriptManager.RegisterStartupScript(UpdatePanel1, typeof(UpdatePanel), "", "alert('success')", true);
 					 实质是为Updatepanel中的某个控件注册一个启动脚本块
 					 
+27.Application对象的生命周期结束：	当虚拟目录 web.config 修改， global.asax 修改，bin 目录下的文件被替换以及服务器重启, iis重启，均会导致Web应用程序重新启动。
