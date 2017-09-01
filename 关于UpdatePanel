@@ -1,0 +1,102 @@
+scriptManager和UpdatePanel要一起使用，UpdatePanel设置页面中异步局部更新区域，它必须依赖ScriptManager，
+ScriptManager的重要属性：
+                      EnablePartialRendering：true表示实现页面的异步局部更新;false表示实现全页面回送。默认为true
+UpdatePanel的重要属性：
+                      RenderMode:InLine，UpdatePanel将被解析成HTML的<span>;Block，UpdatePanel表示将被解析成HTML的<div>。
+                      UpdateMode：见Part Four
+    UpdatePanel控件的ChildAsTrigger属性：指示UpdatePanel内部控件引起的回发是否产生当前UpdatePanel控件的局部更新。
+    
+Part One:
+=============================================================================================================================
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title>无标题页</title> 
+</head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+</div> 
+<asp:ScriptManager ID="ScriptManager1" runat="server"> 
+</asp:ScriptManager> 
+      <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Always"> //默认UpdateMode="Always"
+        <ContentTemplate> 
+          <% =DateTime.Now.ToString()%> 
+          <asp:Button ID="Button1" runat="server" Text="UpdatePanelButton" /> 
+        </ContentTemplate> 
+      </asp:UpdatePanel> 
+      
+      
+<asp:Button ID="Button2" runat="server" Text="Button" /> 
+
+</form> 
+</body> 
+</html>
+//一个button在UpdatePanel内，一个在外。每个button点击都将触发UpdatePanel更新。
+//但是UpdatePanel内部的button点击后是局部更新，外部button点击后是整个页面回送。
+
+
+
+
+Part Two:
+============================================================================================================================
+把UpdateMode改成conditional, 且ChildrenAsTriggers设置为false（语义上就是更新模式为：不总是更新&子控件不作为触发器使用，
+                                                            因为conditional模式需要配合trigger来启用局部更新）
+外部的button点击后仍然是整个页面回送没有问题，但是内部的button点击后就不再产生任何效果。
+
+
+
+Part Three:
+=============================================================================================================================
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title>无标题页</title> 
+</head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+</div> 
+<asp:ScriptManager ID="ScriptManager1" runat="server"> 
+</asp:ScriptManager> 
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">// mode的设置不影响结果，影响结果的是同步回送触发器
+        <ContentTemplate> 
+        <% =DateTime.Now.ToString()%> 
+        <asp:Button ID="Button1" runat="server" Text="UpdatePanelButton" /> 
+        </ContentTemplate> 
+        <Triggers> 
+            <asp:PostBackTrigger ControlID="Button1"/>
+        </Triggers> 
+     </asp:UpdatePanel> 
+
+<br /> 
+<% =DateTime.Now.ToString()%> 
+<asp:Button ID="Button2" runat="server" Text="Button" /> 
+
+</form> 
+</body> 
+</html>
+普通回送触发器(PostBackTrigger) 实现整个页面的回送，当UpdatePanel内的子控件被触发后                           
+将实现整个页面回送
+
+
+
+Part Four:
+=============================================================================================================================
+如果 UpdateMode 属性设置为 Always：
+                                        整个网页上的回发都将更新 该UpdatePanel 中的内容，包括UpdatePanel外部的控件引起普通同步回发（整个页面刷新），
+                                        和其他UpdatePanel中的子控件引发的异步回发（其他UpdatePanel的局部更新）。
+                                        这包括从位于其他控件的异步回发 UpdatePanel 控件并不是内部的控件的回发 UpdatePanel 控件。
+
+
+如果 UpdateMode 属性设置为 Conditional：
+                                        UpdatePanel 在以下情况下更新控件的内容︰
+                                        1.显式调用 Update 方法 
+                                        2.当 UpdatePanel 控件嵌套在另一个 UpdatePanel 控件，并且父Panel更新。
+                                        3.该Panel内部定义了触发器，并且触发。无论触发器关联的控件在不在Panel内部，只要关联的控件触发事件发生，
+                                         该Panel就可以异步更新 
+                                         
+ChildrenAsTriggers 属性设置为 false 和 UpdateMode 属性设置为 Always 是不允许的
+
+如果UpdatePanel外部的控件被某个UpdatePanel的trigger关联，那么该外部控件就失去了同步页面回发的能力
