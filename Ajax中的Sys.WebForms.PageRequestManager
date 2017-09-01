@@ -28,15 +28,15 @@ prm.abortPostBack()：把一个正在执行中的异步回送取消。
 <script type="text/javascript" language="javascript">
             var prm = Sys.WebForms.PageRequestManager.getInstance();//定义一个全局PageRequestManager实例赋值给变量 prm 
         prm.add_initializeRequest(initializeRequest);//增加一个事件，在异步请求初始化之前
-        prm.add_endRequest(endRequest);
+        prm.add_endRequest(endRequest);//在回送处理完毕时触发事件
         var postbackElement;
         function initializeRequest(sender, args) {
-            document.body.style.cursor = "wait";
+            document.body.style.cursor = "wait";//鼠标样式设为等待
             if (prm.get_isInAsyncPostBack()) {//判断一个异步回送是否正在进行中
-                args.set_cancel(true);
+                args.set_cancel(true);取消该异步回送
             }
         }
-        function endRequest(sender, args) {
+        function endRequest(sender, args) {//在回送结束时触发，更改鼠标样式
             document.body.style.cursor = "default";
         }
     </script>
