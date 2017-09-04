@@ -24,9 +24,14 @@ ViewState["key"]="123";//has changed
 ASP.NET是在页面生命周期的OnInit阶段才调用TrackViewState()方法的。这样做的目的就是让ASP.NET可以很方便的区分控件的哪些属性值
 在初次声明发生了改变
 
+4.
+运行机制：
+首先页面回传以后，整个Page将重新生成并且页面上声明的静态控件也都已经被解析添加到以Page为根节点的控件树中，
+那些静态控件对应的静态声明的属性值也都被初始化。然后是OnInit阶段，在这个阶段ASP.NET会调用TrackViewState方法，
+从此以后所有对控件属性的赋值操作都将导致被跟踪。接着就是LoadViewState()方法被调用，
+这里那些从_ViewState中反序列化出来的值将被重新赋给对应的控件，由于在此之前TrackViewState()已经被调用了，
+_ViewState中包含的数据对应的属性值都会被标记为Dirty。这样当调用SaveViewState的时候，
+这些属性值还是会被持久的保留到_ViewState中
 
 
 
-
-
-转自 http://www.cnblogs.com/wwan/archive/2010/11/18/1880357.html
