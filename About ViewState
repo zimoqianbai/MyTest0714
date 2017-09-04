@@ -1,0 +1,32 @@
+1.
+以下这种方式并不是 大多数 服务器控件存储其属性值的方式
+public string Text 
+{    
+    get { return _text; }    
+    set { _text = value; }
+}
+
+大多数 服务器控件存储其属性值的方式应该是这样的：
+public string Text 
+{   
+     get { return (string)ViewState["Text"]; }   
+     set { ViewState["Text"] = value; }
+}通过ViewState来存储，所以在设计自定义服务器控件时最好是以这种方式存储
+
+2.
+ViewState判定值是否被改变的方式：
+ViewState["key"]="123";//original
+ViewState["key"]="123";//has changed
+
+3.
+如果ViewState还没有开始跟踪数据，那么脏数据的标记值就一直为False。当ASP.NET解析静态控件的时并没有开始跟踪ViewState
+原因是前ASP.NET并没有去调用TrackViewState()方法，所以ViewState是不会对数据的更改进行跟踪的。
+ASP.NET是在页面生命周期的OnInit阶段才调用TrackViewState()方法的。这样做的目的就是让ASP.NET可以很方便的区分控件的哪些属性值
+在初次声明发生了改变
+
+
+
+
+
+
+转自 http://www.cnblogs.com/wwan/archive/2010/11/18/1880357.html
