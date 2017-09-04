@@ -1,0 +1,124 @@
+1.Select:
+
+方式一：
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ConsoleApplication1
+{
+   public class Student
+    {
+        private string _stuID;
+        private string _stuName;
+        private string _stuClass;
+
+        public string StuID
+        {
+            get
+            {
+                return stuID;
+            }
+
+            set
+            {
+                stuID = value;
+            }
+        }
+        public string StuName
+        {
+            get
+            {
+                return stuName;
+            }
+
+            set
+            {
+                stuName = value;
+            }
+        }
+        public string StuClass
+        {
+            get
+            {
+                return stuClass;
+            }
+
+            set
+            {
+                stuClass = value;
+            }
+        }
+
+        public override string ToString()
+        {
+            return _stuName + "同学,学号：" + _stuID + " 班级：" + _stuClass;
+        }
+
+        public Student(string id,string name,string stuClass)
+        {
+            this._stuID = id;
+            this._stuName = name;
+            this._stuClass = stuClass;
+        }
+    }
+}
+static void Main(string[] args)
+        {
+            List<Student> stuList = new List<Student>();
+            stuList.Add((new Student("20170001", "Joe", "6")));
+            stuList.Add((new Student("20170002", "Rose", "6")));
+            stuList.Add((new Student("20170003", "herman", "6")));
+
+            var source = from t in stuList
+                         where t.StuID == "20170002"
+                         select t;
+
+            foreach(Student t in source)
+            {
+                Console.WriteLine(t.ToString());
+            }
+
+        }
+Output:
+Rose同学,学号：20170002 班级：6
+
+
+方式二：
+
+ var source = from x in stuList
+                       where x.StuClass == "6"
+                       select new {x.StuID,x.StuClass };//在select结果集中映射多个属性
+            
+            foreach (var t in source)
+            {
+                Console.WriteLine(t);
+            }
+
+Output:
+{ StuID = 20170001, StuClass = 6 }
+{ StuID = 20170002, StuClass = 6 }
+{ StuID = 20170003, StuClass = 6 }
+
+
+方式三：
+
+var source = from i in stuList
+                         select new
+                         {
+                           他的学号 = i.StuID,
+                           他的姓名 = i.StuName,
+                           他的班级 = i.StuClass,
+                         
+                       };
+            foreach (var t in source)
+            {
+                Console.WriteLine(t);
+            }
+
+Output:
+{ 他的学号 = 20170001, 他的姓名 = Joe, 他的班级 = 6 }
+{ 他的学号 = 20170002, 他的姓名 = Rose, 他的班级 = 6 }
+{ 他的学号 = 20170003, 他的姓名 = herman, 他的班级 = 6 }
