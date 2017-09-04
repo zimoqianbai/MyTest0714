@@ -34,4 +34,4 @@ _ViewState中包含的数据对应的属性值都会被标记为Dirty。这样�
 这些属性值还是会被持久的保留到_ViewState中
 
 
-
+原文：http://www.cnblogs.com/wwan/archive/2010/11/18/1880357.html
