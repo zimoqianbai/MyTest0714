@@ -1,0 +1,5 @@
+1.Q:为什么command参数化查询可以防止Sql注入？
+  A:因为参数化查询可以重用执行计划，存储过程也是如此，只要重用执行计划，就可以防止Sql注入
+
+http://www.cnblogs.com/LoveJenny/　　　
+
