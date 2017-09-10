@@ -103,3 +103,20 @@ ASP.NET学习笔记
 27.Application对象的生命周期结束：	当虚拟目录 web.config 修改， global.asax 修改，bin 目录下的文件被替换以及服务器重启, iis重启，均会导致Web应用程序重新启动。
 
 28.aspx 弹出对话框：			   Page.ClientScript.RegistStarupScript()
+
+29.Eval与DataBinder.Eval:		Eval 方法源代码：
+					protected internal object Eval(string expression)
+					{
+					this.CheckPageExists();
+					return DataBinder.Eval(this.Page.GetDataItem(), expression);
+					}//Eval会根据最近的容器对象（例如DataListItem）的DataItem属性来自动地解析字段，而DataBinder.Eval需要使用参数来指定容器。
+					由于这个原因，Eval只能在数据绑定控件的模板中使用，而不能用于 Page（页面）层。
+					
+30.DataBinder.Eval：		        DataBinder.Eval 它带有三个参数：数据项的命名容器、数据字段名称和格式化字符串。 在模板列表如DataList、DataGrid、或 Repeater，命名容器总是Container.DataItem。 
+					 Page 是另一个可以被DataBinder.Eval使用的命名容器。 
+					 <%# DataBinder.Eval(Container.DataItem, "IntegerValue", "{0:c}") %>
+					 格式化字符串参数是可选的。如果忽略参数，DataBinder.Eval 返回对象类型的值，
+31.Bind与Eval:				Eval是单向的数据显示，不可修改值。<%# bind'字段名')%>是双向的get与set，可以将修改更新到数据源
+
+32.
+
