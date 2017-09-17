@@ -4,7 +4,10 @@ ASP.NET学习笔记
 
 2.内嵌语法块：				<%内嵌代码%>
 
-3.在标记元素中使用内嵌代码：		<%=balabala内嵌表达式%><%= %>是输出，<%# %>是赋值
+3.在标记元素中使用内嵌代码：		       <%=balabala内嵌表达式%><%= %>是在页面中输出，如 <%=DateTime.Now %>。 
+					数据绑定表达式包含在 <%# 和 %> 分隔符之内，并使用 Eval 和 Bind 函数。Eval 函数用于定义单向（只读）绑定
+					Bind 函数用于定义双向（可更新）绑定。除了通过在数据绑定表达式中调用 Eval 和 Bind 方法执行数据绑定外，
+					还可以调用 <%# 和 %> 分隔符之内的任何公共范围代码，以在页面处理过程中执行该代码并返回一个值
 
 4.readonly，const：			若要创建运行时初始化的常数值，应使用readonly关键字。const关键字用于创建编译时常数。
 
@@ -16,17 +19,17 @@ ASP.NET学习笔记
 					网址与参数用？隔开，参数之间用&隔开
 					Request.Params["参数名"]//获取参数
 
-6.Response对象与JavaScript结合使用：	Response.Write("<script>window.close()</script>");
+6.Response对象与JavaScript结合使用：	 Response.Write("<script>window.close()</script>");
 
-7.存储cookie变量：       		Response.Cookies[valName].Value=值；
-取回cookie:              		变量名=Request.Cookies[valName].Value；
+7.存储cookie变量：       		    Response.Cookies[valName].Value=值；
+取回cookie:              		      变量名=Request.Cookies[valName].Value；
 
-8.获取用户IP：      			string 变量名=Request.UserHostAddress;
+8.获取用户IP：      			    string 变量名=Request.UserHostAddress;
 					string 变量名=Request.ServerVariables["REMOTE_ADDR"];
 
 9.写入文件到客户端：			Response.WriteFile(@"全文件名")//如果文件不存在会产生异常
 
-10.获取所指定的虚拟路径对应的物理路径	Server.MapPath("")  当前的网站目录为E:\wwwroot   
+10.获取所指定的虚拟路径对应的物理路径	  Server.MapPath("")  当前的网站目录为E:\wwwroot   
 					应用程序虚拟目录为E:\wwwroot\company 
 					浏览的页面路径为E:\wwwroot\company\news\show.asp
 					在show.asp页面中使用
@@ -57,7 +60,7 @@ ASP.NET学习笔记
 
 17.md5加密：				using System.Web.Security;string tempStr=FormsAuthentication.HashPasswordForStoringInConfigFile(data, "md5");
 
-18.获取文件的后缀：			String fileExtension = System.IO.Path.GetExtension(this.FileUpload1.FileName).ToLower();
+18.获取文件的后缀：			 String fileExtension = System.IO.Path.GetExtension(this.FileUpload1.FileName).ToLower();
 
 19.DataBind:			 	在.aspx中定义公共的属性（有get访问器）或者变量，并Page.DataBind()；在源代码中<%#变量名%>以获取变量值.
 					Text="<%#函数调用（参数） %>"      Text="<%#operation(ddlOperator.SelectedValue) %>"     Text='<%#"总金额为："+Convert.ToString(TextBox2.Text) %>'
@@ -67,17 +70,17 @@ ASP.NET学习笔记
 
 20.控制弹出窗口的大小： 		 	Response.Write("<script language='javascript'>window.open('WebForm1.aspx','新窗口的名字，可以为空'，'width=332,height=200')</script>");
 
-21.全局ConnectionString:		设置web.config中的节点    <appSettings > <add key="ConnectionString" value="dsfsdf"/> </appSettings>
+21.全局ConnectionString:		      设置web.config中的节点    <appSettings > <add key="ConnectionString" value="dsfsdf"/> </appSettings>
 					调用：string conStr = ConfigurationManager.AppSettings["ConnectionString"].ToString();
 
-22.为GridView设置主键并获取主键值：	GridView1.DataKeyNames = new string []{ "主键字段名" }；获取主键值： string temp=GridView1.DataKeys[e.RowIndex].Value.ToString();
+22.为GridView设置主键并获取主键值：	      GridView1.DataKeyNames = new string []{ "主键字段名" }；获取主键值： string temp=GridView1.DataKeys[e.RowIndex].Value.ToString();
 
 23.单击GridView控件的某行按钮后，
 刷新页面（或PostBack）后维持当前位置，
 不会回到页面顶端：			<%@ Page Language="C#" MaintainScrollPositionOnPostback="true" %>
 
 
-24.在GridView中删除数据：		需要添加一个CommandField列，并指明为“删除”按钮（默认为LinkButton）
+24.在GridView中删除数据：		  需要添加一个CommandField列，并指明为“删除”按钮（默认为LinkButton）
         				单击该按钮时触发RowDeleting事件
    					 protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
     					{
