@@ -31,7 +31,7 @@ ASP.NET学习笔记
 
 10.获取所指定的虚拟路径对应的物理路径	  Server.MapPath("")  当前的网站目录为E:\wwwroot   
 					应用程序虚拟目录为E:\wwwroot\company 
-					浏览的页面路径为E:\wwwroot\company\news\show.asp
+			 		浏览的页面路径为E:\wwwroot\company\news\show.asp
 					在show.asp页面中使用
 					Server.MapPath("./")   返回路径为：E:\wwwroot\company\news
 					Server.MapPath("/")    返回路径为：E:\wwwroot
@@ -122,4 +122,6 @@ ASP.NET学习笔记
 31.Bind与Eval:				Eval是单向的数据显示，不可修改值。<%# bind'字段名')%>是双向的get与set，可以将修改更新到数据源
 
 32.在aspx中使用旧的html标签：		  
+
+33.英文字体family:			      font-family:'Lucida Sans Unicode',Verdana,Arial;
 
