@@ -137,6 +137,8 @@ ASP.NET学习笔记
 					  而对于#div2，由于它之前的#div1声明向左浮动，那么#div2第一反应时去填充#div1留下的空间，
 					  这个时候再对#div2声明clear:both就会起作用，它就跑到下面去了。当然，如果#div1留下的上层空间不足，#div2无论如何也不会填充到#div1的右边
 					  
-35.
+35.不使用html的弹窗：			     点击页面上的按钮，弹出一个对话框提示是“确定”还是“取消”操作，采用在按钮中添加属性来完成： 
+					  public System.Web.UI.WebControls.Button btn_Test; 
+					  btn_Test.Attributes.Add("onclick", "return confirm('确定要删吗?');"); 
 
 					  
