@@ -140,5 +140,9 @@ ASP.NET学习笔记
 35.不使用html的弹窗：			     点击页面上的按钮，弹出一个对话框提示是“确定”还是“取消”操作，采用在按钮中添加属性来完成： 
 					  public System.Web.UI.WebControls.Button btn_Test; 
 					  btn_Test.Attributes.Add("onclick", "return confirm('确定要删吗?');"); 
-
 					  
+36.控件Attributes.Add（）		       Attributes.Add（“javascript事件名”，“javascript代码”）	
+
+37.使用旧的html标记：			    	
+					<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    					"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
