@@ -17,6 +17,7 @@ public string Text
 ViewState判定值是否被改变的方式：
 ViewState["key"]="123";//original
 ViewState["key"]="123";//has changed
+只要修改过就是改变了，无论修改的值是否一样
 
 3.
 如果ViewState还没有开始跟踪数据，那么脏数据的标记值就一直为False。当ASP.NET解析静态控件的时并没有开始跟踪ViewState
