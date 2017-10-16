@@ -38,10 +38,10 @@ ASP.NET学习笔记
 					Server.MapPath("../")   返回路径为：E:\wwwroot\company
 					Server.MapPath("~/")   返回路径为：E:\wwwroot\company
 
-11.获取页面间的传值：			Response.Redirect("xxx.aspx?value=页面间的传值");
-参数的默认类型是字符串					xxx.aspx的代码中：Response.Write($"使用Request[string key]===={Request["value"]}<br>");
-            						Response.Write($"使用Request.Params[string key]====={Request.Params["value"]}<br>");
-            						Response.Write($"使用Requset.QueryString[string key]======{Request.QueryString["value"]}<br>");
+11.获取页面间的传值：			Response.Redirect("xxx.aspx?value=页面间的传值");以下三种方法都可以取得value的值
+参数的默认类型是字符串					xxx.aspx的代码中：Response.Write($"{Request["value"]}");
+            						Response.Write($"{Request.Params["value"]}<br>");
+            						Response.Write($"{Request.QueryString["value"]}<br>");
 
 12.获取客户端浏览器信息：			HttpBrowserCapabilities b=Request.Browser;b.Type b.Version b.Cookies
 
