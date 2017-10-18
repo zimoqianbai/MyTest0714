@@ -1,3 +1,4 @@
+以下内容摘自：https://www.2cto.com/kf/201311/257181.html
 案例一： //使用for..in循环遍历对象属性
  varperson={ name: "Admin",age: 21, address:"shandong" };
  for(vari in person){
