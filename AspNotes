@@ -2,7 +2,14 @@ ASP.NET学习笔记
 ============================================================
 1.多行注释：         			<%--annotation--%>
 
-2.内嵌语法块：				<%内嵌代码%>
+2.使用<%# 变量名 %>：			     <asp:TextBox runat="server" Text="<%#test%>" ID="txt_Test"></asp:TextBox>
+					  protected void Page_Load(object sender, EventArgs e)
+    					 {
+     					    test += "1";
+     					    this.DataBind();
+  					 }
+  					   public static string test = "";
+					   
 
 3.在标记元素中使用内嵌代码：		       <%=balabala内嵌表达式%><%= %>是在页面中输出，如 <%=DateTime.Now %>。 
 					数据绑定表达式包含在 <%# 和 %> 分隔符之内，并使用 Eval 和 Bind 函数。Eval 函数用于定义单向（只读）绑定
