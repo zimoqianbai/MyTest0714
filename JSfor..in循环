@@ -1,0 +1,65 @@
+案例一： //使用for..in循环遍历对象属性
+ varperson={ name: "Admin",age: 21, address:"shandong" };
+ for(vari in person){
+ console.log(i);
+ }
+执行结果为：
+name
+age
+address
+
+ 
+当遍历一个对象的时候，变量 i 也就是循环计数器 为 对象的属性名
+ //使用for..in循环遍历数组
+ vararray = ["admin","manager","db"]
+for(vari in array){
+console.log(i);
+ }
+执行结果：
+0
+1
+2
+当遍历一个数组的时候，变量 i 也就是循环计数器 为 当前数组元素的索引
+
+案例二：
+但是，现在看来for .. in循环还挺好用啊，不过，别高兴太早，看看下面的例子：
+ var array =["admin","manager","db"];
+//给Array的原型添加一个name属性
+ Array.prototype.name= "zhangsan";
+for(var i in array){
+alert(array[i]);
+ }
+运行结果：
+admin
+manager
+db
+zhangsan
+咦，奇观了，怎么平白无故的冒出来一个zhangsan
+现在，再看看使用 for循环会怎样？
+vararray = ["admin","manager","db"];
+ //给Array的原型添加一个name属性
+ Array.prototype.name = "zhangsan";
+for(var i =0 ; i<array.length; i++){
+ alert(array[i]);
+  };
+运行结果：
+admin
+manager
+db
+哦， 现在明白了，for..in循环会把某个类型的原型(prototype)中方法与属性给遍历出来，所以这可能会导致代码中出现意外的错误。为了避免这个问题，我们可以使用对象的hasOwnProperty()方法来避免这个问题，如果对象的属性或方法是非继承的，那么hasOwnProperty() 方法返回true。即这里的检查不涉及从其他对象继承的属性和方法，只会检查在特定对象自身中直接创建的属性。
+案例三：
+ vararray = ["admin","manager","db"];
+ Array.prototype.name= "zhangshan";
+ for(vari in array){
+//如果不是该对象自身直接创建的属性（也就是该属//性是原型中的属性），则跳过显示
+ if(!array.hasOwnProperty(i)){
+ continue;
+ }
+ alert(array[i]);
+}
+运行结果：
+admin
+manager
+db
+
+ 
