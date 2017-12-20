@@ -1,0 +1,48 @@
+           <script type="text/javascript" >
+					      function PopUp() {       
+					          if(confirm('Sure to update ?')==true)//confirm(string txt)函数打开一个确认对话框，
+					      //一个确认按钮，一个取消按钮
+										       //根据用户点击的按钮，返回true or false,确认为true
+						{
+					              return true;
+					          }
+					          else {
+					              return false;
+					          }
+          
+					      } //弹出对话框后，根据用户点击的按钮的不同，函数返回true or false
+					 </script>
+
+
+					<asp:Button ID="btn_Sumit" runat="server" Text="Sumit" OnClick="btn_Sumit_Click" OnClientClick="return PopUp()" />
+					关于onClientClick与onClick.onClientClick一般用于绑定客户端脚本，OnClick用于绑定服务器脚本，即.cs文件中的函数。
+					特别需要注意的是，onClientClick将根据返回值的true or false，决定是否继续执行onClick。如果onClientClick返回true，
+					则执行onClick，反之则不执行。
+					如上所示，一个提交按钮点击后弹出对话框，根据用户点击的“确认”或“取消”按钮，PopUp()将返回true or false，
+					OnClientClick="return PopUp()"则 OnClientClick将根据PopUp函数的返回值确定是否继续执行OnClick的btn_Sumit_Click方法。
+					而使用asp.net弹窗，则在某个asp按钮上绑定如上所示的客户端脚本，根据用户点击的“确认”与“取消”按钮，决定是否继续执行该按钮
+					的服务器代码。实现与MessageBox基本一致的功能。
+
+					缺点：按钮数量只有两个，只能实现true or false逻辑。
+
+
+
+					使用asp弹窗获取返回值来执行某段代码
+					//通过设置<asp:HiddenField clientID='hid'>，使hid的value等于confirm()函数的返回值，
+					并调用btn_Hid按钮的click事件，在btn_Hid_Click函数中判断hiddenfield的value,从而实现根据
+					confirm()函数返回值，来决定是否执行某段代码
+
+					protected void btn_某个按钮_Click(object sender, EventArgs e)
+					        {
+					            string js = string.Format("document.getElementById('{0}').value=confirm('是否确认?');document.getElementById('{1}').click();", hid.ClientID, btn_Hid.ClientID);
+						    ClientScript.RegisterStartupScript(GetType(), "confirm", js, true);//Asp注册弹窗脚本
+ 					       }
+
+
+					protected void btn_Hid_Click(object sender, EventArgs e)
+ 					       {
+ 					           if(hid.value==true)
+							执行代码
+						    else
+							执行代码        
+					}
